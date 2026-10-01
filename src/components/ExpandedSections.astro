@@ -1,0 +1,93 @@
+﻿---
+const interests = [
+  { number: '01', title: 'People & behavior', text: 'Exploring how environment, experiences, and choices shape human behavior—and why context matters when we try to understand someone.' },
+  { number: '02', title: 'Justice & responsibility', text: 'Thinking about fairness, accountability, and the responsibilities that come with working in systems that affect people’s lives.' },
+  { number: '03', title: 'Safer communities', text: 'Learning how awareness, prevention, and cooperation can support communities before problems become crises.' },
+];
+const notes = [
+  { category: 'Study', title: 'Ask better questions', text: 'A learning practice: begin with what is known, identify what is missing, and look for evidence before drawing conclusions.', tag: 'CRITICAL THINKING' },
+  { category: 'Study', title: 'Look beyond the first explanation', text: 'An idea to explore: how different perspectives help us understand behavior, social conditions, and community concerns.', tag: 'HUMAN BEHAVIOR' },
+  { category: 'Growth', title: 'Small habits, steady progress', text: 'A goal to practice: make time for review, break larger tasks into manageable steps, and reflect on what needs more attention.', tag: 'CONSISTENCY' },
+  { category: 'Community', title: 'Listen before responding', text: 'A reminder to carry forward: understanding starts with listening carefully and treating people’s experiences with respect.', tag: 'EMPATHY' },
+  { category: 'Growth', title: 'Make feedback useful', text: 'A skill to develop: ask for specific feedback, choose one practical improvement, and give yourself time to apply it.', tag: 'SELF-REFLECTION' },
+  { category: 'Community', title: 'Contribute with care', text: 'A direction to explore: show up reliably, share responsibilities fairly, and consider how your actions affect others.', tag: 'TEAMWORK' },
+];
+const goals = [
+  { label: 'NOW', title: 'Build the foundation', text: 'Focus on understanding core concepts, organizing study time, and asking questions when a lesson needs a closer look.' },
+  { label: 'NEXT', title: 'Put learning into practice', text: 'Look for opportunities to develop communication, teamwork, and careful observation through coursework and future activities.' },
+  { label: 'LOOKING AHEAD', title: 'Choose a meaningful direction', text: 'Explore possible paths in criminology and public service, then shape a direction that matches my abilities and values.' },
+];
+---
+<div class="expanded-content">
+  <section class="extra-section" id="interests" aria-labelledby="interests-title">
+    <div class="extra-heading"><div><p class="eyebrow">WHAT SPARKS MY CURIOSITY</p><h2 id="interests-title">A closer look at <span class="blue">what matters.</span></h2></div><p>Areas to explore as my understanding grows.</p></div>
+    <div class="interest-grid">{interests.map(item => <article class="extra-card"><span class="card-index">{item.number}</span><h3>{item.title}</h3><p>{item.text}</p></article>)}</div>
+  </section>
+  <section class="extra-section" id="learning" aria-labelledby="learning-title">
+    <div class="extra-heading"><div><p class="eyebrow">THE LEARNING NOTEBOOK</p><h2 id="learning-title">Ideas to <span class="blue">carry forward.</span></h2></div><p>Study prompts and intentions for the road ahead.</p></div>
+    <div class="note-filters" role="group" aria-label="Filter learning notes">{['All', 'Study', 'Growth', 'Community'].map(category => <button type="button" data-filter={category} aria-pressed={category === 'All'}>{category}</button>)}</div>
+    <p class="note-count" aria-live="polite" aria-atomic="true">Showing all 6 notes</p>
+    <div class="notes-grid">{notes.map(note => <article class="extra-card note-card" data-category={note.category}><p class="note-tag">{note.tag}</p><h3>{note.title}</h3><p>{note.text}</p><span class="category-label">{note.category}</span></article>)}</div>
+  </section>
+  <section class="extra-section" id="goals" aria-labelledby="goals-title">
+    <div class="extra-heading"><div><p class="eyebrow">MY NEXT CHAPTER</p><h2 id="goals-title">A direction, <span class="blue">one step at a time.</span></h2></div><p>Goals in progress, with room to grow.</p></div>
+    <ol class="goal-timeline">{goals.map(goal => <li><span>{goal.label}</span><h3>{goal.title}</h3><p>{goal.text}</p></li>)}</ol>
+    <aside class="values-callout"><p class="eyebrow">A PERSONAL REMINDER</p><p>Stay curious. Be accountable.<br /><strong>Let your actions reflect your values.</strong></p></aside>
+  </section>
+  <section class="extra-section" id="faq" aria-labelledby="faq-title">
+    <div class="extra-heading"><div><p class="eyebrow">A FEW MORE THINGS</p><h2 id="faq-title">Get to <span class="blue">know me.</span></h2></div><p>Open a question to read more.</p></div>
+    <div class="faq-list">
+      <details><summary>What is this website for?</summary><p>It is my personal space to introduce myself, share my learning direction, and keep a growing record of the person I’m becoming as a criminology student.</p></details>
+      <details><summary>What will I share here?</summary><p>Study reflections, personal goals, and experiences worth remembering. The learning notebook currently contains prompts and intentions; I’ll add specific coursework and experiences as the site grows.</p></details>
+      <details><summary>What values guide my journey?</summary><p>Integrity, discipline, empathy, and responsibility. These are values to practice through everyday decisions, relationships, and learning.</p></details>
+      <details><summary>Can we connect or collaborate?</summary><p>I welcome conversations about learning and student life. My contact details will appear below once they are ready to share.</p></details>
+    </div>
+  </section>
+</div>
+<script>
+  const filters = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const cards = document.querySelectorAll<HTMLElement>('.note-card');
+  const count = document.querySelector('.note-count');
+  filters.forEach(button => button.addEventListener('click', () => {
+    const category = button.dataset.filter;
+    filters.forEach(filter => filter.setAttribute('aria-pressed', String(filter === button)));
+    let visible = 0;
+    cards.forEach(card => {
+      card.hidden = category !== 'All' && card.dataset.category !== category;
+      if (!card.hidden) visible++;
+    });
+    if (count) count.textContent = category === 'All' ? `Showing all ${visible} notes` : `Showing ${visible} ${category?.toLowerCase()} notes`;
+  }));
+</script>
+<style>
+  .expanded-content { width: min(1200px, calc(100% - 44px)); margin-inline: auto; }
+  .extra-section { padding: 76px 0; border-top: 1px solid var(--line); scroll-margin-top: 80px; }
+  .extra-heading { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 30px; }
+  .extra-heading h2 { font-size: clamp(2rem, 4vw, 3rem); max-width: 720px; margin: 12px 0 0; line-height: 1.2; letter-spacing: -.045em; }
+  .extra-heading > p, .extra-card > p, .goal-timeline p, .faq-list p { color: var(--muted); line-height: 1.85; font-size: .9rem; }
+  .extra-heading > p { max-width: 230px; }
+  .interest-grid, .notes-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  .extra-card { padding: 30px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel-soft); }
+  .extra-card h3 { font-size: 1.15rem; margin: 22px 0 12px; }
+  .card-index, .note-tag { font-family: 'DM Mono', monospace; color: var(--accent); font-size: .7rem; letter-spacing: .06em; }
+  .extra-card .note-tag { color: var(--accent); font-size: .65rem; }
+  .note-filters { display: flex; flex-wrap: wrap; gap: 10px; }
+  .note-filters button { font: inherit; font-size: .8rem; background: transparent; border: 1px solid var(--line-strong); border-radius: 30px; padding: 10px 20px; color: var(--text); cursor: pointer; }
+  .note-filters button[aria-pressed="true"] { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+  .note-filters button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+  .note-count { color: var(--muted); font-size: .75rem; margin: 20px 0; }
+  .note-card[hidden] { display: none; }
+  .category-label { display: inline-block; border: 1px solid var(--line); padding: 5px 10px; border-radius: 4px; color: var(--muted); font-size: .65rem; margin-top: 10px; }
+  .goal-timeline { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+  .goal-timeline li { border-top: 2px solid var(--accent); padding-top: 24px; }
+  .goal-timeline li > span { font: .65rem 'DM Mono', monospace; color: var(--accent); letter-spacing: .1em; }
+  .goal-timeline h3 { font-size: 1.15rem; margin-top: 20px; }
+  .values-callout { background: var(--panel-soft); border-left: 3px solid var(--accent); padding: 30px; margin-top: 36px; }
+  .values-callout > p:last-child { font-size: clamp(1.3rem, 2.5vw, 2rem); line-height: 1.5; margin: 16px 0 0; }
+  .faq-list details { border-bottom: 1px solid var(--line); padding: 22px 0; }
+  .faq-list summary { cursor: pointer; font-weight: 700; line-height: 1.7; }
+  .faq-list p { max-width: 850px; }
+  @media(max-width: 800px) { .interest-grid, .notes-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .extra-heading { display: block; } .extra-heading > p { max-width: none; } }
+  @media(max-width: 560px) { .interest-grid, .notes-grid, .goal-timeline { grid-template-columns: 1fr; } .extra-section { padding: 48px 0; } .extra-card { padding: 24px; } }
+  @media(prefers-reduced-motion: reduce) { :global(html) { scroll-behavior: auto; } }
+</style>

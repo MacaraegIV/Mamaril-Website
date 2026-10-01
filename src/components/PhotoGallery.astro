@@ -1,0 +1,36 @@
+﻿---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const photos = [
+  { file: 'caloy4.jpg', caption: 'Classroom moments', alt: 'Group selfie of students in criminology uniforms in a classroom' },
+  { file: 'caloy2.jpg', caption: 'Learning together', alt: 'Students in uniform working with other students around a table' },
+  { file: 'caloy3.jpg', caption: 'A day at school', alt: 'Students gathered in a classroom with notebooks and papers' },
+  { file: 'caloy1.jpg', caption: 'On the court', alt: 'Basketball group posing together on the court bleachers' },
+  { file: 'caloy5.jpg', caption: 'Courtside memories', alt: 'Three basketball players in green jerseys beneath a basketball hoop' },
+  { file: 'caloy7.jpg', caption: 'Gym time', alt: 'Three people posing for a mirror photo at a gym' },
+  { file: 'caloy6.jpg', caption: 'Together at home', alt: 'Group portrait of seven people at home' },
+  { file: 'caloy8.jpg', caption: 'A day outdoors', alt: 'Five people sitting on a colorful bench surrounded by palm trees' },
+  { file: 'caloy11.jpg', caption: 'Around the table', alt: 'Five people gathered around a dinner table outdoors at night' },
+  { file: 'caloy9.jpg', caption: 'By the sea', alt: 'A seaside portrait beside a railing overlooking the beach' },
+  { file: 'caloy12.jpg', caption: 'A moment together', alt: 'Two people taking an outdoor selfie in white shirts' },
+];
+---
+<section class="photo-album" id="photos" aria-labelledby="photos-title">
+  <div class="album-heading"><div><p class="eyebrow">MY PERSONAL ALBUM / 11 MOMENTS</p><h2 id="photos-title">Collected moments.<br/><span class="blue">Unfiltered memories.</span></h2></div><p>School days, time on the court, and everyday memories.<br />Select a picture to see the full photo.</p></div>
+  <div class="album-grid">{photos.map((photo, index) => <figure><a href={`${base}/images/${photo.file}`} target="_blank" rel="noopener" aria-label={`View full photo: ${photo.caption} (opens in a new tab)`}><img src={`${base}/images/${photo.file}`} alt={photo.alt} loading="lazy" decoding="async" /></a><figcaption><span>{String(index + 1).padStart(2, '0')}</span>{photo.caption}<span aria-hidden="true">&#8599;</span></figcaption></figure>)}</div>
+</section>
+<style>
+  .photo-album { width: min(1200px, calc(100% - 44px)); margin-inline: auto; padding: 70px 0; border-top: 1px solid var(--line); scroll-margin-top: 90px; }
+  .album-heading { display: flex; justify-content: space-between; align-items: end; gap: 30px; margin-bottom: 30px; }
+  h2 { font-size: clamp(2rem, 4vw, 3rem); line-height: 1.2; letter-spacing: -.045em; margin: 12px 0 0; }
+  .album-heading > p { color: var(--muted); font-size: .85rem; line-height: 1.8; max-width: 320px; }
+  .album-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+  figure { margin: 0; overflow: hidden; border: 1px solid var(--line); border-radius: 8px; background: var(--panel-soft); }
+  figure a { display: block; background: #121212; }
+  figure a:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
+  img { width: 100%; height: 320px; object-fit: contain; display: block; }
+  figcaption { display: flex; align-items: center; gap: 12px; padding: 18px; font-size: .8rem; }
+  figcaption span { font-family: monospace; color: var(--accent); }
+  figcaption span:last-child { margin-left: auto; }
+  @media(max-width: 850px) { .album-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .album-heading { display: block; } }
+  @media(max-width: 520px) { .album-grid { grid-template-columns: 1fr; } .photo-album { padding-block: 48px; } img { height: auto; max-height: 480px; } }
+</style>

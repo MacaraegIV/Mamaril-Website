@@ -1,0 +1,68 @@
+---
+import '../../styles.css';
+import AmbientBackground from '../components/AmbientBackground.astro';
+import PersonalSections from '../components/PersonalSections.astro';
+import PhotoGallery from '../components/PhotoGallery.astro';
+import { profile } from '../data/portfolio';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={`${profile.name} — ${profile.role}. My studies, personal journey, and life beyond the classroom.`} />
+    <meta name="theme-color" content="#090708" />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <title>{profile.name} — {profile.role}</title>
+  </head>
+  <body>
+    <AmbientBackground />
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="header wrap">
+      <a class="logo" href={`${base}/`} aria-label="Home"><span class="logo-mark">CM.</span></a>
+      <button class="menu-toggle" aria-controls="navigation" aria-expanded="false">Menu <span>☰</span></button>
+      <nav id="navigation" aria-label="Main navigation">
+        <a href="#home" aria-current="page">Home</a>
+        <a href="#story">About Me</a>
+        <a href="#photos">Photos</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+    <main id="main">
+      <section class="hero wrap" id="home" aria-labelledby="hero-title">
+        <div class="hero-copy"><p class="eyebrow"><span class="status-dot"></span> CARLOS MAMARIL / A STUDENT JOURNAL</p><h1 id="hero-title"><span class="name-highlight">{profile.firstName}<br/>Mamaril.</span><br/><span class="hero-role">Criminology student.<br/>A life in progress.</span></h1><p class="description">{profile.intro}</p><div class="hero-actions"><a class="button" href="#journey">Read my journey <span>↓</span></a><a class="quiet-link" href="#about">Meet the person <span>↓</span></a></div><div class="hero-caption"><span class="little-star">✳</span> Observe carefully. Learn openly. Keep moving.</div></div>
+        <div class="hero-visual"><div class="line-orbit" aria-hidden="true"></div><div class="orb orb-one" aria-hidden="true"></div><div class="orb orb-two" aria-hidden="true"></div><div class="portrait-frame"><img src={`${base}/images/caloyprof-transparent.png`} width="1201" height="1310" alt={`${profile.name} in criminology uniform`} fetchpriority="high" /><div class="portrait-shade"></div></div><div class="floating-label"><span>✦</span><div>Curiosity in practice.<small>Integrity in every step.</small></div></div><span class="photo-note">PERSONAL PORTRAIT / 01</span></div>
+      </section>
+      <div class="skills-strip"><div class="wrap"><span>MY EVERYDAY COMPASS</span><p>✳ Integrity</p><p>◇ Discipline</p><p>✧ Empathy</p><p>✺ Responsibility</p></div></div>
+      <section class="about wrap section" id="about" aria-labelledby="about-title"><div class="about-visual"><div class="about-photo"><img src={`${base}/images/caloyprof-transparent.png`} alt={`${profile.name} in criminology uniform`} width="1201" height="1310" loading="lazy" /></div><div class="experience-badge"><span>Always</span><strong>curious.</strong><span>ALWAYS LEARNING ↗</span></div><div class="about-ring" aria-hidden="true"></div></div><div class="about-copy"><p class="eyebrow">01 / INTRODUCTION</p><h2 id="about-title">Behind the uniform.<br/><span class="blue">Beyond the first impression.</span></h2><p>{profile.about}</p><p>{profile.aboutMore}</p><div class="about-facts"><div><strong>Study</strong><span>Criminology</span></div><div><strong>Learn</strong><span>With an open mind</span></div><div><strong>Grow</strong><span>One step at a time</span></div></div><a class="button" href="#story">Read my story <span>↓</span></a></div></section>
+      <section class="journey-home section" id="journey" aria-labelledby="journey-title"><div class="wrap"><div class="section-heading"><div><p class="eyebrow">02 / THE PATH SO FAR</p><h2 id="journey-title">Questions. Lessons. <span class="blue">Direction.</span></h2></div><p>Questions become lessons.<br/>Lessons become direction.</p></div><div class="journey-cards"><article class="service-card"><div class="service-top"><span class="service-icon">01</span><span>START</span></div><h3>Curiosity</h3><p>My journey began with questions about society, justice, and why people make the choices they do. I became interested in understanding human behavior and the communities around us.</p></article><article class="service-card"><div class="service-top"><span class="service-icon">02</span><span>LEARN</span></div><h3>Study</h3><p>As a criminology student, I am learning about crime theories, victimology, criminal justice systems, and the role of prevention. Every lesson gives me a wider perspective.</p></article><article class="service-card"><div class="service-top"><span class="service-icon">03</span><span>PURPOSE</span></div><h3>Growth</h3><p>I want to stay grounded in empathy and contribute to a society that is more informed, fair, and proactive. Understanding people is the first step toward meaningful change.</p></article></div><div class="journey-note"><strong>What I’m carrying forward</strong><span>Discipline</span><span>Empathy</span><span>Critical thinking</span><span>Responsibility</span></div></div></section>
+      <PersonalSections />
+      <section class="video-section wrap section" id="video" aria-labelledby="video-title">
+        <div class="section-heading"><div><p class="eyebrow">FROM MY CAMERA ROLL</p><h2 id="video-title">Press play on <span class="blue">the everyday.</span></h2></div></div>
+        <video controls playsinline preload="metadata" aria-label="Personal video">
+          <source src={`${base}/videos/personal-intro.mp4`} type="video/mp4" />
+          Your browser does not support the video element.
+        </video>
+      </section>
+      <PhotoGallery />
+      <section class="contact section" id="contact" aria-labelledby="contact-title"><div class="wrap contact-inner"><p class="eyebrow"><span class="status-dot"></span> KEEP THE CONVERSATION GOING</p><h2 id="contact-title">Every connection<br/><span class="blue">starts with hello.</span></h2><p>Share a thought, a school experience, or simply say hello.<br/>I’d be glad to hear from you.</p><a class="button" href={`mailto:${profile.email}`}>Start a conversation <span>↗</span></a><a class="email" href={`mailto:${profile.email}`}>{profile.email}</a><a class="email" href={profile.facebook} target="_blank" rel="noreferrer">Facebook</a><span class="contact-star" aria-hidden="true">✳</span></div></section>
+    </main>
+    <footer class="wrap footer"><a class="logo" href="#home" aria-label="Back to home"><span class="logo-mark">CM.</span></a><p>© {new Date().getFullYear()} {profile.name}. All rights reserved.</p><a class="quiet-link" href="#home">Back to top ↑</a></footer>
+    <script>
+      const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+      const navigation = document.querySelector<HTMLElement>('#navigation');
+      const closeMenu = () => { toggle?.setAttribute('aria-expanded', 'false'); navigation?.classList.remove('open'); };
+      toggle?.addEventListener('click', () => { const open = toggle.getAttribute('aria-expanded') !== 'true'; toggle.setAttribute('aria-expanded', String(open)); navigation?.classList.toggle('open', open); });
+      navigation?.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
+      document.addEventListener('keydown', event => { if (event.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') { closeMenu(); toggle.focus(); } });
+    </script>
+  </body>
+</html>
+
+<style>
+  .video-section { padding-block: 56px; border-top: 1px solid var(--line); }
+  .video-section .section-heading { margin-bottom: 24px; }
+  .video-section video { display: block; width: 100%; max-height: 75vh; aspect-ratio: 16 / 9; object-fit: contain; background: #080d0e; border: 1px solid var(--line); border-radius: 6px; }
+  @media (max-width: 620px) { .video-section { padding-block: 40px; } }
+</style>
